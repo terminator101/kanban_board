@@ -11,8 +11,15 @@ class ColumnController extends Controller
     //Display all columns
     public function index(Request $request)
     {
+        //Get all columns
         $columns = Column::all();
-        return view('kanbanboard', compact('columns'));
+
+        //Get all cards
+        $cards = DB::table('cards')
+                ->orderBy('order_number', 'asc')
+                ->get();
+        
+        return view('kanbanboard', compact('columns','cards'));
     }
 
     //Store a new column
@@ -33,6 +40,7 @@ class ColumnController extends Controller
     //Delete a column
     public function destroy(Column $column)
     {
+        DB::table('cards')->where('column_id', '=', $column->id)->delete();
     	$column->delete();
     	return redirect()->route('columns.index')
             ->with('success','Column deleted successfully.');

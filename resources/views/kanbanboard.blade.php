@@ -21,6 +21,10 @@
                             <div class="row">
                                 <div class="col">
                                     {{ $column->title }}
+                                    <form action="{{ route('cards.store', 'columnId=' . $column->id ) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">+card</button>
+                                    </form>
                                     <form action="{{ route('columns.destroy', $column->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -28,6 +32,20 @@
                                     </form>
                                 </div>
                             </div>
+                            @foreach ($cards as $card)
+                                @if ($card->column_id == $column->id)
+                                <div class="row">
+                                    <div class="col card">
+                                        {{ $card->title }}
+                                        <form action="{{ route('cards.destroy', $card->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">X</button>
+                                    </form>
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
                         </div>
                     @endforeach
                     <div class="col-3 column">
@@ -35,7 +53,7 @@
                             <div class="col">
                                 <form action="" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">Add column</button>
+                                    <button type="submit" class="btn btn-primary">Add column</button>
                                 </form>
                             </div>
                         </div>
