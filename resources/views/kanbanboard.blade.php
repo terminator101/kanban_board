@@ -38,10 +38,10 @@
                                     <div class="col card">
                                         {{ $card->title }}
                                         <form action="{{ route('cards.destroy', $card->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">X</button>
-                                    </form>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">X</button>
+                                        </form>
                                     </div>
                                 </div>
                                 @endif

@@ -9,7 +9,7 @@
 <style>
 .column {
     border: 1px solid red;
-    height: 200px;
+    min height: 200px;
 }
 .card {
     border: 1px solid black;
