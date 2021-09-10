@@ -13,7 +13,7 @@
 }
 .card {
     border: 1px solid black;
-    height: 50px;
+    height: 80px; /* 50px */
 }
 </style>
 <body>

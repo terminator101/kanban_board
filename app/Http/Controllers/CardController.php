@@ -24,6 +24,44 @@ class CardController extends Controller
             ->with('success','Card created successfully.');
     }
 
+    public function update(Request $request, Card $Card)
+    {
+        $direction = '';
+        $current_card_order_no = $Card->order_number;
+
+        //Move the card up
+        if($request->action == 'moveUp')
+        {
+            $direction = 'up';
+            
+            //update the previous card with the new order number
+            DB::table('cards')
+                    ->where('order_number', intval($current_card_order_no - 1))
+                    ->update(['order_number' => intval($Card->order_number)]);
+
+            //Update the current card with the new order number
+            DB::table('cards')
+                    ->where('id', $Card->id)
+                    ->update(['order_number' => intval($Card->order_number - 1)]);
+        }
+        //Move the card down
+        elseif($request->action == 'moveDown') {
+            $direction = 'down';
+
+            //update the next card with the new order number
+            DB::table('cards')
+                    ->where('order_number', intval($current_card_order_no + 1))
+                    ->update(['order_number' => intval($Card->order_number)]);
+
+            //Update the current card with the new order number
+            DB::table('cards')
+                    ->where('id', $Card->id)
+                    ->update(['order_number' => intval($Card->order_number + 1)]);
+        }
+        return redirect()->route('columns.index')
+            ->with('success','Card moved ' . $direction . ' successfully.');
+    }
+
     //Delete a card
     public function destroy(Card $card)
     {

@@ -37,6 +37,21 @@
                                 <div class="row">
                                     <div class="col card">
                                         {{ $card->title }}
+                                            @if ($card->order_number > 1)
+                                                <form action="{{ route('cards.update', $card->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="hidden" name="action" value="moveUp">
+                                                    <button type="submit" class="btn btn-danger"><i class="bi bi-arrow-up"></i></button>
+                                                </form>
+                                            @endif
+                                            <!-- Implement when ready 
+                                                <form action="{{ route('cards.update', $card->id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="action" value="moveDown">
+                                                <button type="submit" class="btn btn-danger"><i class="bi bi-arrow-down"></i></button>
+                                            </form> -->
                                         <form action="{{ route('cards.destroy', $card->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
